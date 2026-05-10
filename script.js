@@ -172,6 +172,42 @@ function formatTime(seconds) {
     `.replace(/\s/g, '');
 }
 
+/* SOM DE FINALIZAÇÃO */
+
+function playFinishSound() {
+
+    const audioContext =
+        new (window.AudioContext || window.webkitAudioContext)();
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gainNode =
+        audioContext.createGain();
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.setValueAtTime(
+        880,
+        audioContext.currentTime
+    );
+
+    oscillator.connect(gainNode);
+
+    gainNode.connect(audioContext.destination);
+
+    gainNode.gain.setValueAtTime(
+        0.15,
+        audioContext.currentTime
+    );
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime + 0.25
+    );
+}
+
 /* Iniciar */
 
 function startTimer(index) {
@@ -202,6 +238,17 @@ function startTimer(index) {
                 exercise.done = true;
 
                 exercise.remaining = 0;
+
+                /* Som */
+
+                playFinishSound();
+
+                /* Vibração */
+
+                if (navigator.vibrate) {
+
+                    navigator.vibrate([200, 100, 200]);
+                }
             }
 
             saveExercises();
