@@ -1,0 +1,420 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+
+    background: #121212;
+
+    color: #f5f5f5;
+
+    font-size: 18px;
+}
+
+.container {
+    max-width: 520px;
+    margin: auto;
+    padding: 18px;
+}
+
+/* Título */
+
+h1 {
+
+    text-align: center;
+
+    margin-bottom: 18px;
+
+    font-size: 34px;
+
+    line-height: 1.2;
+
+    color: white;
+}
+
+/* Toggle */
+
+.toggleFormBtn {
+
+    width: 100%;
+
+    margin-bottom: 12px;
+
+    background: transparent;
+
+    border: none;
+
+    color: #b0b0b0;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    padding: 10px;
+
+    cursor: pointer;
+}
+
+/* Formulário */
+
+.inputArea {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+.inputArea input {
+
+    padding: 18px;
+
+    font-size: 20px;
+
+    border-radius: 14px;
+
+    border: 2px solid #3a3a3a;
+
+    background: #1e1e1e;
+
+    color: white;
+}
+
+.inputArea input::placeholder {
+
+    color: #8f8f8f;
+}
+
+.inputArea input:focus {
+
+    outline: none;
+
+    border-color: #42a5f5;
+
+    box-shadow:
+        0 0 0 4px rgba(66,165,245,0.18);
+}
+
+#exerciseName {
+    flex: 1;
+}
+
+#exerciseTime {
+    width: 130px;
+}
+
+/* Altura padrão */
+
+#addBtn,
+.playBtn,
+.deleteBtn,
+.resetBtn {
+
+    min-height: 60px;
+}
+
+/* Adicionar */
+
+#addBtn {
+
+    min-width: 60px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #00a86b;
+
+    color: white;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* Lista */
+
+.list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+/* Card */
+
+.box {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #1c1c1c;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.35);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border 0.2s ease;
+}
+
+/* Rodando */
+
+.box.running {
+
+    border: 3px solid #42a5f5;
+
+    box-shadow:
+        0 0 0 6px rgba(66,165,245,0.16),
+        0 6px 18px rgba(0,0,0,0.45);
+
+    transform: scale(1.015);
+}
+
+/* Concluído */
+
+.box.done {
+
+    background: #173322;
+}
+
+/* Info */
+
+.info {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+/* Nome */
+
+.title {
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    line-height: 1.3;
+
+    color: white;
+}
+
+/* Timer */
+
+.timer {
+
+    width: 100%;
+
+    text-align: center;
+
+    background: #2a2a2a;
+
+    color: #ffffff;
+
+    font-size: 44px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    line-height: 1.1;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* Timer ativo */
+
+.box.running .timer {
+
+    background: #42a5f5;
+
+    color: white;
+}
+
+/* Ações */
+
+.actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-left: 14px;
+}
+
+/* Base */
+
+.playBtn,
+.deleteBtn,
+.resetBtn {
+
+    border: none;
+
+    border-radius: 14px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+/* Play */
+
+.playBtn {
+
+    width: 72px;
+
+    background: #2196F3;
+
+    font-size: 28px;
+}
+
+/* Excluir */
+
+.deleteBtn {
+
+    width: 72px;
+
+    background: #d84343;
+
+    font-size: 18px;
+}
+
+/* Reset */
+
+.resetBtn {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    background: #2d2d2d;
+
+    font-size: 20px;
+}
+
+/* Pressionado */
+
+.playBtn:active,
+.deleteBtn:active,
+#addBtn:active,
+.resetBtn:active {
+
+    transform: scale(0.96);
+}
+
+/* MOBILE */
+
+@media (max-width: 400px) {
+
+    body {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 14px;
+    }
+
+    h1 {
+
+        font-size: 32px;
+    }
+
+    .inputArea {
+
+        flex-direction: column;
+    }
+
+    #exerciseName,
+    #exerciseTime,
+    #addBtn {
+
+        width: 100%;
+    }
+
+    .box {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 14px;
+    }
+
+    .info {
+
+        width: 100%;
+    }
+
+    .title {
+
+        font-size: 28px;
+
+        text-align: center;
+    }
+
+    .timer {
+
+        width: 100%;
+
+        font-size: 52px;
+
+        padding: 22px;
+    }
+
+    .actions {
+
+        width: 100%;
+
+        flex-direction: row;
+
+        margin-left: 0;
+    }
+
+    .playBtn {
+
+        flex: 1;
+
+        width: auto;
+
+        font-size: 34px;
+    }
+
+    .deleteBtn {
+
+        width: 72px;
+    }
+}
