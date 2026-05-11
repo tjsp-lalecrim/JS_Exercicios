@@ -177,7 +177,10 @@ function formatTime(seconds) {
 function playFinishSound() {
 
     const audioContext =
-        new (window.AudioContext || window.webkitAudioContext)();
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
 
     const oscillator =
         audioContext.createOscillator();
@@ -194,7 +197,9 @@ function playFinishSound() {
 
     oscillator.connect(gainNode);
 
-    gainNode.connect(audioContext.destination);
+    gainNode.connect(
+        audioContext.destination
+    );
 
     gainNode.gain.setValueAtTime(
         0.15,
@@ -247,7 +252,11 @@ function startTimer(index) {
 
                 if (navigator.vibrate) {
 
-                    navigator.vibrate([200, 100, 200]);
+                    navigator.vibrate([
+                        200,
+                        100,
+                        200
+                    ]);
                 }
             }
 
@@ -272,6 +281,49 @@ function updateDOM() {
             document.createElement("div");
 
         box.classList.add("box");
+
+        /* DRAG */
+
+        box.draggable = true;
+
+        box.dataset.index = index;
+
+        box.addEventListener("dragstart", () => {
+
+            box.classList.add("dragging");
+        });
+
+        box.addEventListener("dragend", () => {
+
+            box.classList.remove("dragging");
+
+            saveExercises();
+        });
+
+        box.addEventListener("dragover", event => {
+
+            event.preventDefault();
+
+            const draggingElement =
+                document.querySelector(".dragging");
+
+            if (!draggingElement) return;
+
+            const fromIndex =
+                Number(draggingElement.dataset.index);
+
+            const toIndex =
+                Number(box.dataset.index);
+
+            if (fromIndex === toIndex) return;
+
+            const movedItem =
+                exercises.splice(fromIndex, 1)[0];
+
+            exercises.splice(toIndex, 0, movedItem);
+
+            updateDOM();
+        });
 
         /* Rodando */
 
@@ -312,7 +364,9 @@ function updateDOM() {
         timer.classList.add("timer");
 
         timer.textContent =
-            formatTime(exercise.remaining);
+            formatTime(
+                exercise.remaining
+            );
 
         info.appendChild(title);
 
@@ -437,23 +491,29 @@ addBtn.addEventListener("click", () => {
 
 /* Enter nome */
 
-exerciseName.addEventListener("keydown", event => {
+exerciseName.addEventListener(
+    "keydown",
+    event => {
 
-    if (event.key === "Enter") {
+        if (event.key === "Enter") {
 
-        addBtn.click();
+            addBtn.click();
+        }
     }
-});
+);
 
 /* Enter tempo */
 
-exerciseTime.addEventListener("keydown", event => {
+exerciseTime.addEventListener(
+    "keydown",
+    event => {
 
-    if (event.key === "Enter") {
+        if (event.key === "Enter") {
 
-        addBtn.click();
+            addBtn.click();
+        }
     }
-});
+);
 
 /* Reset */
 

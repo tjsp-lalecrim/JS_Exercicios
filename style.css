@@ -172,6 +172,21 @@ h1 {
         transform 0.2s ease,
         box-shadow 0.2s ease,
         border 0.2s ease;
+
+    cursor: grab;
+}
+
+.box:active {
+    cursor: grabbing;
+}
+
+/* Exercício sendo arrastado */
+
+.box.dragging {
+
+    opacity: 0.5;
+
+    transform: scale(0.98);
 }
 
 /* Rodando */
