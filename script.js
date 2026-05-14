@@ -93,6 +93,23 @@ function checkNewDay() {
 
         saveExercises();
     }
+
+    /* Garantir que todos os exercícios tém a propriedade repeats e paused */
+
+    exercises.forEach(exercise => {
+
+        if (exercise.repeats === undefined) {
+
+            exercise.repeats = 0;
+        }
+
+        if (exercise.paused === undefined) {
+
+            exercise.paused = false;
+        }
+    });
+
+    saveExercises();
 }
 
 /* Adicionar */
@@ -111,7 +128,11 @@ function addExercise(name, seconds) {
 
         running: false,
 
-        interval: null
+        paused: false,
+
+        interval: null,
+
+        repeats: 0
     });
 
     saveExercises();
@@ -146,9 +167,28 @@ function resetDay() {
 
         exercise.running = false;
 
+        exercise.paused = false;
+
         exercise.remaining =
             exercise.seconds;
+
+        exercise.repeats = 0;
     });
+
+    saveExercises();
+
+    updateDOM();
+}
+
+/* Repetir Exercício */
+
+function repeatExercise(index) {
+
+    const exercise = exercises[index];
+
+    exercise.done = false;
+
+    exercise.remaining = exercise.seconds;
 
     saveExercises();
 
@@ -227,6 +267,8 @@ function startTimer(index) {
 
     exercise.running = true;
 
+    exercise.paused = false;
+
     exercise.interval =
         setInterval(() => {
 
@@ -243,6 +285,83 @@ function startTimer(index) {
                 exercise.done = true;
 
                 exercise.remaining = 0;
+
+                exercise.repeats++;
+
+                /* Som */
+
+                playFinishSound();
+
+                /* Vibração */
+
+                if (navigator.vibrate) {
+
+                    navigator.vibrate([
+                        200,
+                        100,
+                        200
+                    ]);
+                }
+            }
+
+            saveExercises();
+
+            updateDOM();
+
+        }, 1000);
+
+    updateDOM();
+}
+
+/* Pausar */
+
+function pauseTimer(index) {
+
+    const exercise = exercises[index];
+
+    if (!exercise.running) return;
+
+    clearInterval(exercise.interval);
+
+    exercise.running = false;
+
+    exercise.paused = true;
+
+    saveExercises();
+
+    updateDOM();
+}
+
+/* Retomar */
+
+function resumeTimer(index) {
+
+    const exercise = exercises[index];
+
+    if (!exercise.paused) return;
+
+    exercise.running = true;
+
+    exercise.paused = false;
+
+    exercise.interval =
+        setInterval(() => {
+
+            exercise.remaining--;
+
+            if (exercise.remaining <= 0) {
+
+                clearInterval(
+                    exercise.interval
+                );
+
+                exercise.running = false;
+
+                exercise.done = true;
+
+                exercise.remaining = 0;
+
+                exercise.repeats++;
 
                 /* Som */
 
@@ -332,6 +451,13 @@ function updateDOM() {
             box.classList.add("running");
         }
 
+        /* Pausado */
+
+        if (exercise.paused) {
+
+            box.classList.add("paused");
+        }
+
         /* Finalizado */
 
         if (exercise.done) {
@@ -355,6 +481,27 @@ function updateDOM() {
 
         title.textContent =
             exercise.name;
+
+        /* Contador de repetições */
+
+        const repeatBadge =
+            document.createElement("div");
+
+        repeatBadge.classList.add(
+            "repeatBadge"
+        );
+
+        repeatBadge.textContent =
+            exercise.repeats > 0
+                ? `Repetido ${exercise.repeats}x`
+                : "Não repetido";
+
+        repeatBadge.classList.toggle(
+            "active",
+            exercise.repeats > 0
+        );
+
+        title.appendChild(repeatBadge);
 
         /* Timer */
 
@@ -388,11 +535,15 @@ function updateDOM() {
 
         if (exercise.done) {
 
-            playBtn.textContent = "✔";
+            playBtn.textContent = "↻";
+
+        } else if (exercise.paused) {
+
+            playBtn.textContent = "▶";
 
         } else if (exercise.running) {
 
-            playBtn.textContent = "⏳";
+            playBtn.textContent = "⏸";
 
         } else {
 
@@ -401,7 +552,22 @@ function updateDOM() {
 
         playBtn.addEventListener("click", () => {
 
-            startTimer(index);
+            if (exercise.done) {
+
+                repeatExercise(index);
+
+            } else if (exercise.paused) {
+
+                resumeTimer(index);
+
+            } else if (exercise.running) {
+
+                pauseTimer(index);
+
+            } else {
+
+                startTimer(index);
+            }
         });
 
         /* Delete */
@@ -415,7 +581,7 @@ function updateDOM() {
 
         /* Bloquear exclusão */
 
-        if (exercise.running) {
+        if (exercise.running || exercise.paused) {
 
             deleteBtn.disabled = true;
 
@@ -427,7 +593,7 @@ function updateDOM() {
 
         deleteBtn.addEventListener("click", () => {
 
-            if (exercise.running) return;
+            if (exercise.running || exercise.paused) return;
 
             deleteExercise(index);
         });
