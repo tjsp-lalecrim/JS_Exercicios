@@ -1,3 +1,7 @@
+/* =========================
+   BASE
+========================= */
+
 * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -5,6 +9,7 @@
 }
 
 body {
+
     margin: 0;
 
     background: #121212;
@@ -15,12 +20,17 @@ body {
 }
 
 .container {
+
     max-width: 520px;
+
     margin: auto;
+
     padding: 18px;
 }
 
-/* Título */
+/* =========================
+   TÍTULO
+========================= */
 
 h1 {
 
@@ -35,7 +45,9 @@ h1 {
     color: white;
 }
 
-/* Toggle */
+/* =========================
+   TOGGLE
+========================= */
 
 .toggleFormBtn {
 
@@ -58,7 +70,9 @@ h1 {
     cursor: pointer;
 }
 
-/* Formulário */
+/* =========================
+   FORM
+========================= */
 
 .inputArea {
 
@@ -107,7 +121,9 @@ h1 {
     width: 130px;
 }
 
-/* Altura padrão */
+/* =========================
+   BOTÕES
+========================= */
 
 #addBtn,
 .playBtn,
@@ -116,8 +132,6 @@ h1 {
 
     min-height: 60px;
 }
-
-/* Adicionar */
 
 #addBtn {
 
@@ -138,7 +152,9 @@ h1 {
     cursor: pointer;
 }
 
-/* Lista */
+/* =========================
+   LISTA
+========================= */
 
 .list {
 
@@ -149,7 +165,9 @@ h1 {
     gap: 14px;
 }
 
-/* Card */
+/* =========================
+   CARD
+========================= */
 
 .box {
 
@@ -177,10 +195,9 @@ h1 {
 }
 
 .box:active {
+
     cursor: grabbing;
 }
-
-/* Exercício sendo arrastado */
 
 .box.dragging {
 
@@ -189,7 +206,9 @@ h1 {
     transform: scale(0.98);
 }
 
-/* Rodando */
+/* =========================
+   STATUS
+========================= */
 
 .box.running {
 
@@ -202,8 +221,6 @@ h1 {
     transform: scale(1.015);
 }
 
-/* Pausado */
-
 .box.paused {
 
     border: 3px solid #ffa726;
@@ -214,8 +231,6 @@ h1 {
 
     transform: scale(1.015);
 }
-
-/* Exercício concluído */
 
 .box.done {
 
@@ -228,7 +243,9 @@ h1 {
         0 6px 18px rgba(0,0,0,0.45);
 }
 
-/* Info */
+/* =========================
+   INFO
+========================= */
 
 .info {
 
@@ -240,8 +257,6 @@ h1 {
 
     gap: 14px;
 }
-
-/* Nome */
 
 .title {
 
@@ -260,7 +275,9 @@ h1 {
     gap: 12px;
 }
 
-/* Badge de repetições */
+/* =========================
+   ESTRELAS
+========================= */
 
 .repeatBadge {
 
@@ -270,68 +287,55 @@ h1 {
 
     justify-content: center;
 
-    background: #555555;
-
-    color: #cccccc;
-
-    font-size: 12px;
-
-    font-weight: bold;
+    min-width: 70px;
 
     padding: 6px 10px;
 
     border-radius: 14px;
 
-    min-width: 95px;
+    background: #2a2a2a;
 
-    text-align: center;
+    border: 2px solid #444;
 
-    border: 2px solid #777777;
+    font-size: 18px;
+
+    letter-spacing: 2px;
 
     transition: all 0.3s ease;
 }
 
 .repeatBadge.active {
 
-    background: #ff9800;
+    background: #3a2b00;
 
-    color: white;
+    border-color: #ffcc33;
 
-    border-color: #ffb84d;
-
-    box-shadow: 0 0 12px rgba(255, 152, 0, 0.4);
-
-    font-size: 13px;
+    box-shadow:
+        0 0 12px rgba(255, 204, 51, 0.35);
 }
 
-/* Nome concluído */
+.box.done .repeatBadge.active {
+
+    background: #4a3600;
+
+    border-color: #ffd54f;
+
+    box-shadow:
+        0 0 12px rgba(255, 213, 79, 0.4);
+}
+
+/* =========================
+   DONE
+========================= */
 
 .box.done .title {
 
     color: #7dffb0;
 }
 
-.box.done .repeatBadge.active {
-
-    background: #1ed760;
-
-    color: #081b12;
-
-    border-color: #7dffb0;
-
-    box-shadow: 0 0 12px rgba(30, 215, 96, 0.4);
-}
-
-.box.done .repeatBadge:not(.active) {
-
-    background: #1a3a1a;
-
-    color: #88bb88;
-
-    border-color: #2d5a2d;
-}
-
-/* Timer */
+/* =========================
+   TIMER
+========================= */
 
 .timer {
 
@@ -359,8 +363,6 @@ h1 {
         inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 
-/* Timer ativo */
-
 .box.running .timer {
 
     background: #42a5f5;
@@ -368,16 +370,12 @@ h1 {
     color: white;
 }
 
-/* Timer pausado */
-
 .box.paused .timer {
 
     background: #ffa726;
 
     color: white;
 }
-
-/* Timer concluído */
 
 .box.done .timer {
 
@@ -388,7 +386,9 @@ h1 {
     font-weight: bold;
 }
 
-/* Ações */
+/* =========================
+   AÇÕES
+========================= */
 
 .actions {
 
@@ -400,8 +400,6 @@ h1 {
 
     margin-left: 14px;
 }
-
-/* Base */
 
 .playBtn,
 .deleteBtn,
@@ -422,8 +420,6 @@ h1 {
         opacity 0.15s ease;
 }
 
-/* Play */
-
 .playBtn {
 
     width: 72px;
@@ -433,8 +429,6 @@ h1 {
     font-size: 28px;
 }
 
-/* Excluir */
-
 .deleteBtn {
 
     width: 72px;
@@ -443,8 +437,6 @@ h1 {
 
     font-size: 18px;
 }
-
-/* Reset */
 
 .resetBtn {
 
@@ -457,7 +449,9 @@ h1 {
     font-size: 20px;
 }
 
-/* Pressionado */
+/* =========================
+   ACTIVE
+========================= */
 
 .playBtn:active,
 .deleteBtn:active,
@@ -467,7 +461,9 @@ h1 {
     transform: scale(0.96);
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 400px) {
 
@@ -519,15 +515,6 @@ h1 {
         flex-direction: column;
 
         gap: 10px;
-    }
-
-    .repeatBadge {
-
-        font-size: 13px;
-
-        padding: 5px 8px;
-
-        min-width: 85px;
     }
 
     .timer {

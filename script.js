@@ -1,3 +1,7 @@
+/* =========================
+   ESTADO
+========================= */
+
 let exercises = [];
 
 const STORAGE_KEY = "exercise_control";
@@ -27,7 +31,9 @@ const listElement =
 
 let formVisible = true;
 
-/* Data atual */
+/* =========================
+   DATA
+========================= */
 
 function getToday() {
 
@@ -35,7 +41,9 @@ function getToday() {
         .toLocaleDateString("pt-BR");
 }
 
-/* Salvar */
+/* =========================
+   STORAGE
+========================= */
 
 function saveExercises() {
 
@@ -44,8 +52,6 @@ function saveExercises() {
         JSON.stringify(exercises)
     );
 }
-
-/* Carregar */
 
 function loadExercises() {
 
@@ -65,7 +71,9 @@ function loadExercises() {
     }
 }
 
-/* Novo dia */
+/* =========================
+   NOVO DIA
+========================= */
 
 function checkNewDay() {
 
@@ -82,8 +90,14 @@ function checkNewDay() {
 
             exercise.running = false;
 
+            exercise.paused = false;
+
             exercise.remaining =
                 exercise.seconds;
+
+            /* RESETAR ESTRELAS */
+
+            exercise.repeats = 0;
         });
 
         localStorage.setItem(
@@ -94,7 +108,7 @@ function checkNewDay() {
         saveExercises();
     }
 
-    /* Garantir que todos os exercícios tém a propriedade repeats e paused */
+    /* Compatibilidade */
 
     exercises.forEach(exercise => {
 
@@ -112,7 +126,9 @@ function checkNewDay() {
     saveExercises();
 }
 
-/* Adicionar */
+/* =========================
+   ADICIONAR
+========================= */
 
 function addExercise(name, seconds) {
 
@@ -140,7 +156,9 @@ function addExercise(name, seconds) {
     updateDOM();
 }
 
-/* Excluir */
+/* =========================
+   EXCLUIR
+========================= */
 
 function deleteExercise(index) {
 
@@ -155,7 +173,9 @@ function deleteExercise(index) {
     updateDOM();
 }
 
-/* Reset */
+/* =========================
+   RESET MANUAL
+========================= */
 
 function resetDay() {
 
@@ -180,7 +200,9 @@ function resetDay() {
     updateDOM();
 }
 
-/* Repetir Exercício */
+/* =========================
+   REPETIR
+========================= */
 
 function repeatExercise(index) {
 
@@ -188,14 +210,17 @@ function repeatExercise(index) {
 
     exercise.done = false;
 
-    exercise.remaining = exercise.seconds;
+    exercise.remaining =
+        exercise.seconds;
 
     saveExercises();
 
     updateDOM();
 }
 
-/* Formatar tempo */
+/* =========================
+   FORMATAR TEMPO
+========================= */
 
 function formatTime(seconds) {
 
@@ -212,7 +237,9 @@ function formatTime(seconds) {
     `.replace(/\s/g, '');
 }
 
-/* SOM DE FINALIZAÇÃO */
+/* =========================
+   SOM
+========================= */
 
 function playFinishSound() {
 
@@ -253,7 +280,9 @@ function playFinishSound() {
     );
 }
 
-/* Iniciar */
+/* =========================
+   INICIAR
+========================= */
 
 function startTimer(index) {
 
@@ -288,11 +317,7 @@ function startTimer(index) {
 
                 exercise.repeats++;
 
-                /* Som */
-
                 playFinishSound();
-
-                /* Vibração */
 
                 if (navigator.vibrate) {
 
@@ -313,11 +338,14 @@ function startTimer(index) {
     updateDOM();
 }
 
-/* Pausar */
+/* =========================
+   PAUSAR
+========================= */
 
 function pauseTimer(index) {
 
-    const exercise = exercises[index];
+    const exercise =
+        exercises[index];
 
     if (!exercise.running) return;
 
@@ -332,11 +360,14 @@ function pauseTimer(index) {
     updateDOM();
 }
 
-/* Retomar */
+/* =========================
+   RETOMAR
+========================= */
 
 function resumeTimer(index) {
 
-    const exercise = exercises[index];
+    const exercise =
+        exercises[index];
 
     if (!exercise.paused) return;
 
@@ -363,11 +394,7 @@ function resumeTimer(index) {
 
                 exercise.repeats++;
 
-                /* Som */
-
                 playFinishSound();
-
-                /* Vibração */
 
                 if (navigator.vibrate) {
 
@@ -388,7 +415,9 @@ function resumeTimer(index) {
     updateDOM();
 }
 
-/* Render */
+/* =========================
+   RENDER
+========================= */
 
 function updateDOM() {
 
@@ -444,35 +473,31 @@ function updateDOM() {
             updateDOM();
         });
 
-        /* Rodando */
+        /* STATUS */
 
         if (exercise.running) {
 
             box.classList.add("running");
         }
 
-        /* Pausado */
-
         if (exercise.paused) {
 
             box.classList.add("paused");
         }
-
-        /* Finalizado */
 
         if (exercise.done) {
 
             box.classList.add("done");
         }
 
-        /* Info */
+        /* INFO */
 
         const info =
             document.createElement("div");
 
         info.classList.add("info");
 
-        /* Nome */
+        /* TÍTULO */
 
         const title =
             document.createElement("div");
@@ -482,7 +507,7 @@ function updateDOM() {
         title.textContent =
             exercise.name;
 
-        /* Contador de repetições */
+        /* ESTRELAS */
 
         const repeatBadge =
             document.createElement("div");
@@ -491,10 +516,13 @@ function updateDOM() {
             "repeatBadge"
         );
 
+        const stars =
+            "⭐".repeat(
+                Math.min(exercise.repeats, 5)
+            );
+
         repeatBadge.textContent =
-            exercise.repeats > 0
-                ? `Repetido ${exercise.repeats}x`
-                : "Não repetido";
+            stars || "☆";
 
         repeatBadge.classList.toggle(
             "active",
@@ -503,7 +531,7 @@ function updateDOM() {
 
         title.appendChild(repeatBadge);
 
-        /* Timer */
+        /* TIMER */
 
         const timer =
             document.createElement("div");
@@ -519,14 +547,14 @@ function updateDOM() {
 
         info.appendChild(timer);
 
-        /* Ações */
+        /* AÇÕES */
 
         const actions =
             document.createElement("div");
 
         actions.classList.add("actions");
 
-        /* Play */
+        /* PLAY */
 
         const playBtn =
             document.createElement("button");
@@ -570,7 +598,7 @@ function updateDOM() {
             }
         });
 
-        /* Delete */
+        /* DELETE */
 
         const deleteBtn =
             document.createElement("button");
@@ -579,9 +607,10 @@ function updateDOM() {
 
         deleteBtn.textContent = "✕";
 
-        /* Bloquear exclusão */
-
-        if (exercise.running || exercise.paused) {
+        if (
+            exercise.running ||
+            exercise.paused
+        ) {
 
             deleteBtn.disabled = true;
 
@@ -593,7 +622,10 @@ function updateDOM() {
 
         deleteBtn.addEventListener("click", () => {
 
-            if (exercise.running || exercise.paused) return;
+            if (
+                exercise.running ||
+                exercise.paused
+            ) return;
 
             deleteExercise(index);
         });
@@ -610,7 +642,9 @@ function updateDOM() {
     });
 }
 
-/* Mostrar / ocultar */
+/* =========================
+   TOGGLE FORM
+========================= */
 
 toggleFormBtn.addEventListener("click", () => {
 
@@ -632,7 +666,9 @@ toggleFormBtn.addEventListener("click", () => {
     }
 });
 
-/* Adicionar */
+/* =========================
+   ADICIONAR
+========================= */
 
 addBtn.addEventListener("click", () => {
 
@@ -655,7 +691,7 @@ addBtn.addEventListener("click", () => {
     exerciseTime.value = "";
 });
 
-/* Enter nome */
+/* ENTER */
 
 exerciseName.addEventListener(
     "keydown",
@@ -668,8 +704,6 @@ exerciseName.addEventListener(
     }
 );
 
-/* Enter tempo */
-
 exerciseTime.addEventListener(
     "keydown",
     event => {
@@ -681,14 +715,16 @@ exerciseTime.addEventListener(
     }
 );
 
-/* Reset */
+/* RESET */
 
 resetBtn.addEventListener(
     "click",
     resetDay
 );
 
-/* Inicialização */
+/* =========================
+   INIT
+========================= */
 
 loadExercises();
 
