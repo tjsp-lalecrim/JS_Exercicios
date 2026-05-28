@@ -215,6 +215,42 @@ h1 {
     transform: scale(0.99);
 }
 
+.groupHeader {
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.groupStars {
+
+    margin-top: 10px;
+
+    font-size: 18px;
+
+    letter-spacing: 4px;
+
+    color: #ffd54f;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 8px 12px;
+
+    background: rgba(255, 213, 79, 0.08);
+
+    border-radius: 12px;
+}
+
 /* =========================
    CARD
 ========================= */

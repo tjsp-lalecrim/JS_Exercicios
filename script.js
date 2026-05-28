@@ -780,11 +780,19 @@ function updateDOM() {
                     )
                     : "☆";
 
-            groupTitle.textContent =
+            groupTitle.innerHTML = `
 
-                `${group.collapsed
+    <div class="groupHeader">
+        ${group.collapsed
                     ? "▶"
-                    : "▼"} ${group.name} ${stars}`;
+                    : "▼"} ${group.name}
+    </div>
+
+    <div class="groupStars">
+        ${stars}
+    </div>
+
+`;
 
             groupTitle
                 .addEventListener(
