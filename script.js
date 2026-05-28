@@ -150,18 +150,18 @@ function loadExercises() {
 
                 exercises:
                     parsed.map(
-                    exercise => ({
+                        exercise => ({
 
-                        ...exercise,
+                            ...exercise,
 
-                        paused:
-                            exercise.paused
-                            ?? false,
+                            paused:
+                                exercise.paused
+                                ?? false,
 
-                        repeats:
-                            exercise.repeats
-                            ?? 0
-                    }))
+                            repeats:
+                                exercise.repeats
+                                ?? 0
+                        }))
             }
         ];
 
@@ -194,21 +194,21 @@ function checkNewDay() {
             group.exercises.forEach(
                 exercise => {
 
-                exercise.done =
-                    false;
+                    exercise.done =
+                        false;
 
-                exercise.running =
-                    false;
+                    exercise.running =
+                        false;
 
-                exercise.paused =
-                    false;
+                    exercise.paused =
+                        false;
 
-                exercise.remaining =
-                    exercise.seconds;
+                    exercise.remaining =
+                        exercise.seconds;
 
-                exercise.repeats =
-                    0;
-            });
+                    exercise.repeats =
+                        0;
+                });
         });
 
         localStorage.setItem(
@@ -224,23 +224,23 @@ function checkNewDay() {
         group.exercises.forEach(
             exercise => {
 
-            if (
-                exercise.repeats ===
-                undefined
-            ) {
+                if (
+                    exercise.repeats ===
+                    undefined
+                ) {
 
-                exercise.repeats = 0;
-            }
+                    exercise.repeats = 0;
+                }
 
-            if (
-                exercise.paused ===
-                undefined
-            ) {
+                if (
+                    exercise.paused ===
+                    undefined
+                ) {
 
-                exercise.paused =
-                    false;
-            }
-        });
+                    exercise.paused =
+                        false;
+                }
+            });
     });
 
     saveExercises();
@@ -369,8 +369,8 @@ function deleteExercise(
     const exercise =
         groups[groupIndex]
             .exercises[
-                exerciseIndex
-            ];
+        exerciseIndex
+        ];
 
     clearInterval(
         exercise.interval
@@ -415,25 +415,25 @@ function resetDay() {
         group.exercises.forEach(
             exercise => {
 
-            clearInterval(
-                exercise.interval
-            );
+                clearInterval(
+                    exercise.interval
+                );
 
-            exercise.done =
-                false;
+                exercise.done =
+                    false;
 
-            exercise.running =
-                false;
+                exercise.running =
+                    false;
 
-            exercise.paused =
-                false;
+                exercise.paused =
+                    false;
 
-            exercise.remaining =
-                exercise.seconds;
+                exercise.remaining =
+                    exercise.seconds;
 
-            exercise.repeats =
-                0;
-        });
+                exercise.repeats =
+                    0;
+            });
     });
 
     saveExercises();
@@ -453,8 +453,8 @@ function repeatExercise(
     const exercise =
         groups[groupIndex]
             .exercises[
-                exerciseIndex
-            ];
+        exerciseIndex
+        ];
 
     exercise.done = false;
 
@@ -554,8 +554,8 @@ function startTimer(
     const exercise =
         groups[groupIndex]
             .exercises[
-                exerciseIndex
-            ];
+        exerciseIndex
+        ];
 
     if (
 
@@ -574,46 +574,46 @@ function startTimer(
     exercise.interval =
         setInterval(() => {
 
-        exercise.remaining--;
-
-        if (
-            exercise.remaining <= 0
-        ) {
-
-            clearInterval(
-                exercise.interval
-            );
-
-            exercise.running =
-                false;
-
-            exercise.done =
-                true;
-
-            exercise.remaining =
-                0;
-
-            exercise.repeats++;
-
-            playFinishSound();
+            exercise.remaining--;
 
             if (
-                navigator.vibrate
+                exercise.remaining <= 0
             ) {
 
-                navigator.vibrate([
-                    200,
-                    100,
-                    200
-                ]);
+                clearInterval(
+                    exercise.interval
+                );
+
+                exercise.running =
+                    false;
+
+                exercise.done =
+                    true;
+
+                exercise.remaining =
+                    0;
+
+                exercise.repeats++;
+
+                playFinishSound();
+
+                if (
+                    navigator.vibrate
+                ) {
+
+                    navigator.vibrate([
+                        200,
+                        100,
+                        200
+                    ]);
+                }
             }
-        }
 
-        saveExercises();
+            saveExercises();
 
-        updateDOM();
+            updateDOM();
 
-    }, 1000);
+        }, 1000);
 
     updateDOM();
 }
@@ -630,8 +630,8 @@ function pauseTimer(
     const exercise =
         groups[groupIndex]
             .exercises[
-                exerciseIndex
-            ];
+        exerciseIndex
+        ];
 
     if (
         !exercise.running
@@ -664,8 +664,8 @@ function resumeTimer(
     const exercise =
         groups[groupIndex]
             .exercises[
-                exerciseIndex
-            ];
+        exerciseIndex
+        ];
 
     if (
         !exercise.paused
@@ -680,46 +680,46 @@ function resumeTimer(
     exercise.interval =
         setInterval(() => {
 
-        exercise.remaining--;
-
-        if (
-            exercise.remaining <= 0
-        ) {
-
-            clearInterval(
-                exercise.interval
-            );
-
-            exercise.running =
-                false;
-
-            exercise.done =
-                true;
-
-            exercise.remaining =
-                0;
-
-            exercise.repeats++;
-
-            playFinishSound();
+            exercise.remaining--;
 
             if (
-                navigator.vibrate
+                exercise.remaining <= 0
             ) {
 
-                navigator.vibrate([
-                    200,
-                    100,
-                    200
-                ]);
+                clearInterval(
+                    exercise.interval
+                );
+
+                exercise.running =
+                    false;
+
+                exercise.done =
+                    true;
+
+                exercise.remaining =
+                    0;
+
+                exercise.repeats++;
+
+                playFinishSound();
+
+                if (
+                    navigator.vibrate
+                ) {
+
+                    navigator.vibrate([
+                        200,
+                        100,
+                        200
+                    ]);
+                }
             }
-        }
 
-        saveExercises();
+            saveExercises();
 
-        updateDOM();
+            updateDOM();
 
-    }, 1000);
+        }, 1000);
 
     updateDOM();
 }
@@ -739,348 +739,367 @@ function updateDOM() {
             groupIndex
         ) => {
 
-        const groupBox =
-            document.createElement(
-                "div"
-            );
-
-        groupBox.classList.add(
-            "groupBox"
-        );
-
-        /* =========================
-           TÍTULO
-        ========================= */
-
-        const groupTitle =
-            document.createElement(
-                "div"
-            );
-
-        groupTitle.classList.add(
-            "groupTitle"
-        );
-
-        groupTitle.textContent =
-
-            `${group.collapsed
-                ? "▶"
-                : "▼"} ${group.name}`;
-
-        groupTitle
-            .addEventListener(
-            "click",
-            () => toggleGroup(
-                groupIndex
-            )
-        );
-
-        groupBox.appendChild(
-            groupTitle
-        );
-
-        /* =========================
-           COLAPSADO
-        ========================= */
-
-        if (
-            group.collapsed
-        ) {
-
-            listElement
-                .appendChild(
-                groupBox
-            );
-
-            return;
-        }
-
-        /* =========================
-           EXERCÍCIOS
-        ========================= */
-
-        group.exercises.forEach(
-            (
-                exercise,
-                exerciseIndex
-            ) => {
-
-            const box =
+            const groupBox =
                 document.createElement(
                     "div"
                 );
 
-            box.classList.add(
-                "box"
+            groupBox.classList.add(
+                "groupBox"
             );
 
-            if (
-                exercise.running
-            ) {
+            /* =========================
+               TÍTULO
+            ========================= */
 
-                box.classList.add(
-                    "running"
-                );
-            }
-
-            if (
-                exercise.paused
-            ) {
-
-                box.classList.add(
-                    "paused"
-                );
-            }
-
-            if (
-                exercise.done
-            ) {
-
-                box.classList.add(
-                    "done"
-                );
-            }
-
-            /* INFO */
-
-            const info =
+            const groupTitle =
                 document.createElement(
                     "div"
                 );
 
-            info.classList.add(
-                "info"
+            groupTitle.classList.add(
+                "groupTitle"
             );
 
-            /* TÍTULO */
-
-            const title =
-                document.createElement(
-                    "div"
+            const totalStars =
+                group.exercises.reduce(
+                    (total, exercise) =>
+                        total + (
+                            exercise.repeats || 0
+                        ),
+                    0
                 );
-
-            title.classList.add(
-                "title"
-            );
-
-            title.textContent =
-                exercise.name;
-
-            /* ESTRELAS */
-
-            const repeatBadge =
-                document.createElement(
-                    "div"
-                );
-
-            repeatBadge.classList.add(
-                "repeatBadge"
-            );
 
             const stars =
-                "⭐".repeat(
-                    Math.min(
-                        exercise.repeats,
-                        20
+                totalStars > 0
+                    ? "⭐".repeat(
+                        Math.min(
+                            totalStars,
+                            20
+                        )
+                    )
+                    : "☆";
+
+            groupTitle.textContent =
+
+                `${group.collapsed
+                    ? "▶"
+                    : "▼"} ${group.name} ${stars}`;
+
+            groupTitle
+                .addEventListener(
+                    "click",
+                    () => toggleGroup(
+                        groupIndex
                     )
                 );
 
-            repeatBadge.textContent =
-                stars || "☆";
-
-            repeatBadge.classList.toggle(
-                "active",
-                exercise.repeats > 0
-            );
-
-            title.appendChild(
-                repeatBadge
-            );
-
-            /* TIMER */
-
-            const timer =
-                document.createElement(
-                    "div"
-                );
-
-            timer.classList.add(
-                "timer"
-            );
-
-            timer.textContent =
-                formatTime(
-                    exercise.remaining
-                );
-
-            info.appendChild(
-                title
-            );
-
-            info.appendChild(
-                timer
-            );
-
-            /* ACTIONS */
-
-            const actions =
-                document.createElement(
-                    "div"
-                );
-
-            actions.classList.add(
-                "actions"
-            );
-
-            /* PLAY */
-
-            const playBtn =
-                document.createElement(
-                    "button"
-                );
-
-            playBtn.classList.add(
-                "playBtn"
-            );
-
-            if (
-                exercise.done
-            ) {
-
-                playBtn.textContent =
-                    "↻";
-
-            } else if (
-                exercise.paused
-            ) {
-
-                playBtn.textContent =
-                    "▶";
-
-            } else if (
-                exercise.running
-            ) {
-
-                playBtn.textContent =
-                    "⏸";
-
-            } else {
-
-                playBtn.textContent =
-                    "▶";
-            }
-
-            playBtn
-                .addEventListener(
-                "click",
-                () => {
-
-                if (
-                    exercise.done
-                ) {
-
-                    repeatExercise(
-                        groupIndex,
-                        exerciseIndex
-                    );
-
-                } else if (
-                    exercise.paused
-                ) {
-
-                    resumeTimer(
-                        groupIndex,
-                        exerciseIndex
-                    );
-
-                } else if (
-                    exercise.running
-                ) {
-
-                    pauseTimer(
-                        groupIndex,
-                        exerciseIndex
-                    );
-
-                } else {
-
-                    startTimer(
-                        groupIndex,
-                        exerciseIndex
-                    );
-                }
-            });
-
-            /* DELETE */
-
-            const deleteBtn =
-                document.createElement(
-                    "button"
-                );
-
-            deleteBtn.classList.add(
-                "deleteBtn"
-            );
-
-            deleteBtn.textContent =
-                "✕";
-
-            if (
-
-                exercise.running ||
-
-                exercise.paused
-
-            ) {
-
-                deleteBtn.disabled =
-                    true;
-            }
-
-            deleteBtn
-                .addEventListener(
-                "click",
-                () => {
-
-                if (
-
-                    exercise.running ||
-
-                    exercise.paused
-
-                ) return;
-
-                deleteExercise(
-                    groupIndex,
-                    exerciseIndex
-                );
-            });
-
-            actions.appendChild(
-                playBtn
-            );
-
-            actions.appendChild(
-                deleteBtn
-            );
-
-            box.appendChild(
-                info
-            );
-
-            box.appendChild(
-                actions
-            );
-
             groupBox.appendChild(
-                box
+                groupTitle
+            );
+
+            /* =========================
+               COLAPSADO
+            ========================= */
+
+            if (
+                group.collapsed
+            ) {
+
+                listElement
+                    .appendChild(
+                        groupBox
+                    );
+
+                return;
+            }
+
+            /* =========================
+               EXERCÍCIOS
+            ========================= */
+
+            group.exercises.forEach(
+                (
+                    exercise,
+                    exerciseIndex
+                ) => {
+
+                    const box =
+                        document.createElement(
+                            "div"
+                        );
+
+                    box.classList.add(
+                        "box"
+                    );
+
+                    if (
+                        exercise.running
+                    ) {
+
+                        box.classList.add(
+                            "running"
+                        );
+                    }
+
+                    if (
+                        exercise.paused
+                    ) {
+
+                        box.classList.add(
+                            "paused"
+                        );
+                    }
+
+                    if (
+                        exercise.done
+                    ) {
+
+                        box.classList.add(
+                            "done"
+                        );
+                    }
+
+                    /* INFO */
+
+                    const info =
+                        document.createElement(
+                            "div"
+                        );
+
+                    info.classList.add(
+                        "info"
+                    );
+
+                    /* TÍTULO */
+
+                    const title =
+                        document.createElement(
+                            "div"
+                        );
+
+                    title.classList.add(
+                        "title"
+                    );
+
+                    title.textContent =
+                        exercise.name;
+
+                    /* ESTRELAS */
+
+                    const repeatBadge =
+                        document.createElement(
+                            "div"
+                        );
+
+                    repeatBadge.classList.add(
+                        "repeatBadge"
+                    );
+
+                    const stars =
+                        "⭐".repeat(
+                            Math.min(
+                                exercise.repeats,
+                                20
+                            )
+                        );
+
+                    repeatBadge.textContent =
+                        stars || "☆";
+
+                    repeatBadge.classList.toggle(
+                        "active",
+                        exercise.repeats > 0
+                    );
+
+                    title.appendChild(
+                        repeatBadge
+                    );
+
+                    /* TIMER */
+
+                    const timer =
+                        document.createElement(
+                            "div"
+                        );
+
+                    timer.classList.add(
+                        "timer"
+                    );
+
+                    timer.textContent =
+                        formatTime(
+                            exercise.remaining
+                        );
+
+                    info.appendChild(
+                        title
+                    );
+
+                    info.appendChild(
+                        timer
+                    );
+
+                    /* ACTIONS */
+
+                    const actions =
+                        document.createElement(
+                            "div"
+                        );
+
+                    actions.classList.add(
+                        "actions"
+                    );
+
+                    /* PLAY */
+
+                    const playBtn =
+                        document.createElement(
+                            "button"
+                        );
+
+                    playBtn.classList.add(
+                        "playBtn"
+                    );
+
+                    if (
+                        exercise.done
+                    ) {
+
+                        playBtn.textContent =
+                            "↻";
+
+                    } else if (
+                        exercise.paused
+                    ) {
+
+                        playBtn.textContent =
+                            "▶";
+
+                    } else if (
+                        exercise.running
+                    ) {
+
+                        playBtn.textContent =
+                            "⏸";
+
+                    } else {
+
+                        playBtn.textContent =
+                            "▶";
+                    }
+
+                    playBtn
+                        .addEventListener(
+                            "click",
+                            () => {
+
+                                if (
+                                    exercise.done
+                                ) {
+
+                                    repeatExercise(
+                                        groupIndex,
+                                        exerciseIndex
+                                    );
+
+                                } else if (
+                                    exercise.paused
+                                ) {
+
+                                    resumeTimer(
+                                        groupIndex,
+                                        exerciseIndex
+                                    );
+
+                                } else if (
+                                    exercise.running
+                                ) {
+
+                                    pauseTimer(
+                                        groupIndex,
+                                        exerciseIndex
+                                    );
+
+                                } else {
+
+                                    startTimer(
+                                        groupIndex,
+                                        exerciseIndex
+                                    );
+                                }
+                            });
+
+                    /* DELETE */
+
+                    const deleteBtn =
+                        document.createElement(
+                            "button"
+                        );
+
+                    deleteBtn.classList.add(
+                        "deleteBtn"
+                    );
+
+                    deleteBtn.textContent =
+                        "✕";
+
+                    if (
+
+                        exercise.running ||
+
+                        exercise.paused
+
+                    ) {
+
+                        deleteBtn.disabled =
+                            true;
+                    }
+
+                    deleteBtn
+                        .addEventListener(
+                            "click",
+                            () => {
+
+                                if (
+
+                                    exercise.running ||
+
+                                    exercise.paused
+
+                                ) return;
+
+                                deleteExercise(
+                                    groupIndex,
+                                    exerciseIndex
+                                );
+                            });
+
+                    actions.appendChild(
+                        playBtn
+                    );
+
+                    actions.appendChild(
+                        deleteBtn
+                    );
+
+                    box.appendChild(
+                        info
+                    );
+
+                    box.appendChild(
+                        actions
+                    );
+
+                    groupBox.appendChild(
+                        box
+                    );
+                });
+
+            listElement.appendChild(
+                groupBox
             );
         });
-
-        listElement.appendChild(
-            groupBox
-        );
-    });
 }
 
 /* =========================
@@ -1089,14 +1108,14 @@ function updateDOM() {
 
 toggleFormBtn
     .addEventListener(
-    "click",
-    () => {
+        "click",
+        () => {
 
-    formVisible =
-        !formVisible;
+            formVisible =
+                !formVisible;
 
-    updateFormVisibility();
-});
+            updateFormVisibility();
+        });
 
 /* =========================
    ADICIONAR
@@ -1106,41 +1125,41 @@ addBtn.addEventListener(
     "click",
     () => {
 
-    const group =
-        groupName.value.trim();
+        const group =
+            groupName.value.trim();
 
-    const name =
-        exerciseName.value.trim();
+        const name =
+            exerciseName.value.trim();
 
-    const seconds =
-        parseInt(
-            exerciseTime.value
+        const seconds =
+            parseInt(
+                exerciseTime.value
+            );
+
+        if (
+
+            !group ||
+
+            !name ||
+
+            !seconds ||
+
+            seconds <= 0
+
+        ) return;
+
+        addExercise(
+            group,
+            name,
+            seconds
         );
 
-    if (
+        groupName.value = "";
 
-        !group ||
+        exerciseName.value = "";
 
-        !name ||
-
-        !seconds ||
-
-        seconds <= 0
-
-    ) return;
-
-    addExercise(
-        group,
-        name,
-        seconds
-    );
-
-    groupName.value = "";
-
-    exerciseName.value = "";
-
-    exerciseTime.value = "";
-});
+        exerciseTime.value = "";
+    });
 
 /* =========================
    ENTER
@@ -1156,14 +1175,14 @@ addBtn.addEventListener(
         "keydown",
         event => {
 
-        if (
-            event.key ===
-            "Enter"
-        ) {
+            if (
+                event.key ===
+                "Enter"
+            ) {
 
-            addBtn.click();
-        }
-    });
+                addBtn.click();
+            }
+        });
 });
 
 /* =========================
